@@ -1,0 +1,10 @@
+name: 'Hello World'
+description: 'Greet someone'
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello Pet clinic
+      shell: bash
+    - id: random-number-generator
+      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
