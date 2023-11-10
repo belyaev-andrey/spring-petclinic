@@ -19,12 +19,12 @@ jobs:
         platform: ['x64']
 
     steps:
-      - uses: ./.github/actions/echo-action
-        name: 'Hello Action'
       - uses: actions/checkout@v4
         with:
           submodules: true
           show-progress: false
+      - uses: ./.github/actions/echo-action
+        name: 'Hello Action'
       - uses: actions/setup-java@v2
         name: Set up JDK ${{matrix.java}}
         with:
