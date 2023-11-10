@@ -19,16 +19,17 @@ jobs:
         platform: ['x64']
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           submodules: false
           show-progress: true
-      - uses: ./.github/actions/echo-action
-        name: 'Run echo action'
+      - name: Run echo action
+        uses: ./.github/actions/echo-action
         with:
           who-to-greet: 'Pet Clinic'
-      - uses: actions/setup-java@v2
-        name: Set up JDK ${{matrix.java}}
+      - name: Set up JDK ${{matrix.java}}
+        uses: actions/setup-java@v2
         with:
           java-version: ${{matrix.java}}
           distribution: 'adopt'
