@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SpringBootStudioConfig">
+    <option name="jpaConfigPersistentUnitInitialized" value="true" />
+    <profiles>
+      <profile isEnabled="false" moduleName="spring-petclinic" profileName="mysql" />
+      <profile moduleName="spring-petclinic" profileName="postgres" />
+    </profiles>
+  </component>
+</project>

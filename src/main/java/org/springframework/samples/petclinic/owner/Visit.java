@@ -17,12 +17,11 @@ package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.VisitEventListener;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
@@ -33,6 +32,7 @@ import jakarta.validation.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "visits")
+@EntityListeners({ VisitEventListener.class })
 public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
