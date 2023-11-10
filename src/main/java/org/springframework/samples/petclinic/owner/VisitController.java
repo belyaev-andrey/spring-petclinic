@@ -15,16 +15,15 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Map;
 
+import org.springframework.samples.petclinic.clinic.VisitService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
@@ -39,9 +38,15 @@ import jakarta.validation.Valid;
 class VisitController {
 
 	private final OwnerRepository owners;
+	private final VisitService visitService;
+	private final VisitMapper visitMapper;
 
-	public VisitController(OwnerRepository owners) {
+	public VisitController(OwnerRepository owners,
+						   VisitService visitService,
+						   VisitMapper visitMapper) {
 		this.owners = owners;
+		this.visitService = visitService;
+		this.visitMapper = visitMapper;
 	}
 
 	@InitBinder
@@ -91,4 +96,11 @@ class VisitController {
 		return "redirect:/owners/{ownerId}";
 	}
 
+	@PostMapping("/visit/res")
+	public @ResponseBody VisitDto rescheduleVisit(@RequestParam Integer visitId,
+												  @RequestParam LocalDate newTime,
+												  Principal principal) {
+		return visitMapper.
+			toDto(visitService.rescheduleVisit(visitId, newTime));
+	}
 }
