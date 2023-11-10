@@ -20,13 +20,13 @@ jobs:
 
     steps:
       - uses: ./.github/actions/echo-action
-      - name: 'Hello Action'
+        name: 'Hello Action'
       - uses: actions/checkout@v4
         with:
           submodules: true
           show-progress: false
-      - name: Set up JDK ${{matrix.java}}
-        uses: actions/setup-java@v2
+      - uses: actions/setup-java@v2
+        name: Set up JDK ${{matrix.java}}
         with:
           java-version: ${{matrix.java}}
           distribution: 'adopt'
