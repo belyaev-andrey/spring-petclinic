@@ -8,5 +8,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}
+    - name: Bash hello
+      run: echo Hello ${{ inputs.who-to-greet }}
       shell: bash
