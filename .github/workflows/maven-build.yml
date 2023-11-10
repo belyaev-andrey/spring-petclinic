@@ -24,13 +24,14 @@ jobs:
           submodules: true
           show-progress: false
       - uses: ./.github/actions/echo-action
-        name: 'Hello Action'
-      - uses: actions/setup-java@v2
-        name: Set up JDK ${{matrix.java}}
         with:
-          java-version: ${{matrix.java}}
-          distribution: 'adopt'
-          architecture: ${{matrix.platform}}
-          cache: maven
-      - name: Build with Maven Wrapper
-        run: ./mvnw -B package
+          who-to-greet: 'Pet Clinic'
+#      - uses: actions/setup-java@v2
+#        name: Set up JDK ${{matrix.java}}
+#        with:
+#          java-version: ${{matrix.java}}
+#          distribution: 'adopt'
+#          architecture: ${{matrix.platform}}
+#          cache: maven
+#      - name: Build with Maven Wrapper
+#        run: ./mvnw -B package
