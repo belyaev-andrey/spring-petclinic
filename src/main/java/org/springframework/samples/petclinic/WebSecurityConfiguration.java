@@ -18,20 +18,22 @@ public class WebSecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		//Headers management
+		// Headers management
 		http.headers(Customizer.withDefaults());
-		//Session management
+		// Session management
 		http.sessionManagement(Customizer.withDefaults());
-		//Form login
+		// Form login
 		http.formLogin(Customizer.withDefaults());
-		//Anonymous
+		// Anonymous
 		http.anonymous(Customizer.withDefaults());
-		//CSRF
+		// CSRF
 		http.csrf(AbstractHttpConfigurer::disable);
-		//Authorize Requests
-		http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-			.requestMatchers(HttpMethod.GET, "/vets").permitAll()
-			.anyRequest().authenticated());
+		// Authorize Requests
+		http.authorizeHttpRequests(
+				authorizeHttpRequests -> authorizeHttpRequests.requestMatchers(HttpMethod.GET, "/vets")
+					.permitAll()
+					.anyRequest()
+					.authenticated());
 		return http.build();
 	}
 
@@ -40,14 +42,9 @@ public class WebSecurityConfiguration {
 		// The builder will ensure the passwords are encoded before saving in memory
 		User.UserBuilder users = User.withDefaultPasswordEncoder();
 		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-		userDetailsManager.createUser(users.username("admin")
-			.password("admin")
-			.roles("ADMIN")
-			.build());
-		userDetailsManager.createUser(users.username("user")
-			.password("user")
-			.roles("USER")
-			.build());
+		userDetailsManager.createUser(users.username("admin").password("admin").roles("ADMIN").build());
+		userDetailsManager.createUser(users.username("user").password("user").roles("USER").build());
 		return userDetailsManager;
 	}
+
 }
