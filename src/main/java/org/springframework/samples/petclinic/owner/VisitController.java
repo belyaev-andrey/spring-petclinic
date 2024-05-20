@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -60,9 +61,9 @@ class VisitController {
 	@ModelAttribute("visit")
 	public Visit loadPetWithVisit(@PathVariable("ownerId") int ownerId, @PathVariable("petId") int petId,
 			Map<String, Object> model) {
-		Owner owner = this.owners.findById(ownerId);
+		Optional<Owner> owner = this.owners.findById(ownerId);
 
-		Pet pet = owner.getPet(petId);
+		Pet pet = owner.orElseThrow().getPet(petId);
 		model.put("pet", pet);
 		model.put("owner", owner);
 
