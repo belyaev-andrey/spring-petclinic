@@ -29,8 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant
  * with Spring Data naming conventions so this interface can easily be extended for Spring
- * Data. See:
- * <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation">...</a>
+ * Data. See: <a href=
+ * "https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation">...</a>
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
@@ -46,7 +46,9 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	@Transactional(readOnly = true)
 	Page<Owner> findByLastName(@Param("lastName") String lastName, Pageable pageable);
 
-//	@Transactional(readOnly = true)
-//	List<Owner> findByCityContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndPetsName(@NotBlank String city, @NotBlank String lastName, String pets_name);
+	// @Transactional(readOnly = true)
+	// List<Owner>
+	// findByCityContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndPetsName(@NotBlank
+	// String city, @NotBlank String lastName, String pets_name);
 
 }

@@ -61,7 +61,8 @@ class OwnerController {
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable(name = "ownerId", required = false) Integer ownerId) {
-		//owners.findByCityContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndPetsName("", "", "").stream().findAny();
+		// owners.findByCityContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndPetsName("",
+		// "", "").stream().findAny();
 		return ownerId == null ? new Owner() : this.owners.findById(ownerId).orElseThrow();
 	}
 

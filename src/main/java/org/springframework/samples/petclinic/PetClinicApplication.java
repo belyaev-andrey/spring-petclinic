@@ -20,8 +20,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
+import org.springframework.samples.petclinic.owner.OwnerService;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 /**
@@ -32,10 +36,25 @@ import java.util.Locale;
  */
 @SpringBootApplication
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
+@EnableScheduling
 public class PetClinicApplication {
+
+	private final OwnerService ownerService;
+
+	public PetClinicApplication(OwnerService ownerService) {
+		this.ownerService = ownerService;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetClinicApplication.class, args);
+	}
+
+	// {TransactionInterceptor@17708}
+
+	@Scheduled(cron = "0 0 12 * * *")
+	public void sendEmails() {
+		LocalDateTime time = LocalDateTime.now();
+		ownerService.sendEmails(time);
 	}
 
 }
