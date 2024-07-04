@@ -66,7 +66,7 @@ class VetController {
 		return vetRepository.findAll(pageable);
 	}
 
-	@GetMapping(value = { "/vets" }, produces = "application/json")
+	@GetMapping(value = { "/api/v1/vets" }, produces = "application/json")
 	public @ResponseBody Vets showResourcesVetList() {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects, so it is simpler for JSon/Object mapping
