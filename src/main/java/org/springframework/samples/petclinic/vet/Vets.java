@@ -18,6 +18,10 @@ package org.springframework.samples.petclinic.vet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -27,12 +31,12 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  *
  * @author Arjen Poutsma
  */
-@XmlRootElement
+@JsonRootName("vets")
 public class Vets {
 
 	private List<Vet> vets;
 
-	@XmlElement
+	@JsonGetter("vetList")
 	public List<Vet> getVetList() {
 		if (vets == null) {
 			vets = new ArrayList<>();
