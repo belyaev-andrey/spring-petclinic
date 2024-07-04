@@ -16,26 +16,28 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNullApi;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant
  * with Spring Data naming conventions so this interface can easily be extended for Spring
- * Data. See:
- * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
+ * Data. See: <a href=
+ * "https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation">...</a>
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
  * @author Sam Brannen
  * @author Michael Isvy
  */
-public interface OwnerRepository extends Repository<Owner, Integer> {
+public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
 	/**
 	 * Retrieve all {@link PetType}s from the data store.
@@ -64,13 +66,13 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	 */
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	@Transactional(readOnly = true)
-	Owner findById(@Param("id") Integer id);
+	Optional<Owner> findById(@Param("id") Integer id);
 
 	/**
 	 * Save an {@link Owner} to the data store, either inserting or updating it.
 	 * @param owner the {@link Owner} to save
 	 */
-	void save(Owner owner);
+	Owner save(Owner owner);
 
 	/**
 	 * Returns all the owners from data store

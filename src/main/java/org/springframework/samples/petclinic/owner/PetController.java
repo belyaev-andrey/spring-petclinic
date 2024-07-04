@@ -57,26 +57,18 @@ class PetController {
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-
-		Owner owner = this.owners.findById(ownerId);
-		if (owner == null) {
-			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
-		}
-		return owner;
+		return this.owners.findById(ownerId)
+			.orElseThrow(() -> new IllegalArgumentException("Owner ID not found: " + ownerId));
 	}
 
 	@ModelAttribute("pet")
 	public Pet findPet(@PathVariable("ownerId") int ownerId,
 			@PathVariable(name = "petId", required = false) Integer petId) {
-
 		if (petId == null) {
 			return new Pet();
 		}
-
-		Owner owner = this.owners.findById(ownerId);
-		if (owner == null) {
-			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
-		}
+		Owner owner = this.owners.findById(ownerId)
+			.orElseThrow(() -> new IllegalArgumentException("Owner ID not found: " + ownerId));
 		return owner.getPet(petId);
 	}
 

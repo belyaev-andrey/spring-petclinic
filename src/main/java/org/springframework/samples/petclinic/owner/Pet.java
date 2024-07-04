@@ -32,10 +32,8 @@ import org.springframework.samples.petclinic.model.NamedEntity;
  * @author Sam Brannen
  */
 @Entity
-@Table(name = "pets", indexes = {
-	@Index(name = "pets_name_idx", columnList = "name"),
-	@Index(name = "pets_owner_id", columnList = "owner_id")
-})
+@Table(name = "pets", indexes = { @Index(name = "pets_name_idx", columnList = "name"),
+		@Index(name = "pets_owner_id", columnList = "owner_id") })
 public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")
@@ -48,7 +46,6 @@ public class Pet extends NamedEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pet_id")
-	@OrderBy("visit_date ASC")
 	private Set<Visit> visits = new LinkedHashSet<>();
 
 	public void setBirthDate(LocalDate birthDate) {

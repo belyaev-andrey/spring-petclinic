@@ -44,7 +44,7 @@ class CacheConfiguration {
 	 * Within the configuration object that is provided by the JCache API standard, there
 	 * is only a very limited set of configuration options. The really relevant
 	 * configuration options (like the size limit) must be set via a configuration
-	 * mechanism that is provided by the selected JCache implementation.
+	 * mechanism provided by the selected JCache implementation.
 	 */
 	private javax.cache.configuration.Configuration<Object, Object> cacheConfiguration() {
 		return new MutableConfiguration<>().setStatisticsEnabled(true);
