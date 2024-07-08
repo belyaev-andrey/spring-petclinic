@@ -163,8 +163,8 @@ class OwnerController {
 	@GetMapping(value = "/api/v1/owners/{ownerId}", produces = "application/json")
 	@ResponseBody
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-		return
-			owners.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("Owner ID not found: " + ownerId));
+		return owners.findById(ownerId)
+			.orElseThrow(() -> new IllegalArgumentException("Owner ID not found: " + ownerId));
 	}
 
 }
