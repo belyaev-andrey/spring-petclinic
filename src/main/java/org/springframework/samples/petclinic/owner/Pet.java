@@ -20,18 +20,9 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
-import jakarta.persistence.Table;
 
 /**
  * Simple business object representing a pet.
@@ -41,7 +32,8 @@ import jakarta.persistence.Table;
  * @author Sam Brannen
  */
 @Entity
-@Table(name = "pets")
+@Table(name = "pets", indexes = { @Index(name = "pets_name_idx", columnList = "name"),
+		@Index(name = "pets_owner_id", columnList = "owner_id") })
 public class Pet extends NamedEntity {
 
 	@Column(name = "birth_date")
@@ -54,7 +46,6 @@ public class Pet extends NamedEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "pet_id")
-	@OrderBy("visit_date ASC")
 	private Set<Visit> visits = new LinkedHashSet<>();
 
 	public void setBirthDate(LocalDate birthDate) {

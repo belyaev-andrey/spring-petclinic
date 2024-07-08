@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -32,7 +33,7 @@ import jakarta.validation.constraints.NotBlank;
  * @author Dave Syer
  */
 @Entity
-@Table(name = "visits")
+@Table(name = "visits", indexes = @Index(name = "visits_pet_id_idx", columnList = "pet_id"))
 public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")

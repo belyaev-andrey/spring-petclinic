@@ -21,16 +21,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.*;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.samples.petclinic.model.Person;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlElement;
 
 /**
@@ -42,7 +37,7 @@ import jakarta.xml.bind.annotation.XmlElement;
  * @author Arjen Poutsma
  */
 @Entity
-@Table(name = "vets")
+@Table(name = "vets", indexes = @Index(name = "vets_last_name_idx", columnList = "last_name"))
 public class Vet extends Person {
 
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -55,10 +50,6 @@ public class Vet extends Person {
 			this.specialties = new HashSet<>();
 		}
 		return this.specialties;
-	}
-
-	protected void setSpecialtiesInternal(Set<Specialty> specialties) {
-		this.specialties = specialties;
 	}
 
 	@XmlElement

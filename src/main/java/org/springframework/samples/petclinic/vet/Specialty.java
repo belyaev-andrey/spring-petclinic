@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import jakarta.persistence.Index;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ import jakarta.persistence.Table;
  * @author Juergen Hoeller
  */
 @Entity
-@Table(name = "specialties")
+@Table(name = "specialties", indexes = @Index(name = "specialities_name_idx", columnList = "name"))
 public class Specialty extends NamedEntity {
 
 }

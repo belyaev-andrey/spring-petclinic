@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import jakarta.persistence.Index;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
 import jakarta.persistence.Entity;
@@ -24,7 +25,7 @@ import jakarta.persistence.Table;
  * @author Juergen Hoeller Can be Cat, Dog, Hamster...
  */
 @Entity
-@Table(name = "types")
+@Table(name = "types", indexes = @Index(name = "types_name_idx", columnList = "name"))
 public class PetType extends NamedEntity {
 
 }
