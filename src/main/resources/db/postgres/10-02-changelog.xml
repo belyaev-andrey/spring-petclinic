@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.27.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+	<changeSet id="1720646869285-1" author="franck.pachot">
+		<createSequence incrementBy="1" sequenceName="medicine_id_seq" startValue="1"/>
+	</changeSet>
+	<changeSet id="1720646869285-2" author="franck.pachot">
+		<createTable tableName="medicine">
+			<column name="id" type="INT">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="pk_medicine"/>
+			</column>
+			<column name="name" type="text(2147483647)"/>
+		</createTable>
+	</changeSet>
+	<changeSet id="1720646869285-3" author="franck.pachot">
+		<createTable tableName="visit_medicines">
+			<column name="medicine_id" type="INT">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="pk_visit_medicines"/>
+			</column>
+			<column name="visit_id" type="INT">
+				<constraints nullable="false" primaryKey="true" primaryKeyName="pk_visit_medicines"/>
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet id="1720646869285-4" author="franck.pachot">
+		<addForeignKeyConstraint baseColumnNames="medicine_id" baseTableName="visit_medicines"
+								 constraintName="fk_vismed_on_medicine" referencedColumnNames="id"
+								 referencedTableName="medicine"/>
+	</changeSet>
+	<changeSet id="1720646869285-5" author="franck.pachot">
+		<addForeignKeyConstraint baseColumnNames="visit_id" baseTableName="visit_medicines"
+								 constraintName="fk_vismed_on_visit" referencedColumnNames="id"
+								 referencedTableName="visits"/>
+	</changeSet>
+</databaseChangeLog>
