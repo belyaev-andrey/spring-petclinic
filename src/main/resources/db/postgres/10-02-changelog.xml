@@ -36,4 +36,17 @@
 								 constraintName="fk_vismed_on_visit" referencedColumnNames="id"
 								 referencedTableName="visits"/>
 	</changeSet>
+	<changeSet id="1720646869285-6" author="franck.pachot">
+		<sql>
+			INSERT INTO medicine (id, name) VALUES (1, 'vitamins');
+			INSERT INTO medicine (id, name) VALUES (2, 'aspirin');
+			INSERT INTO medicine (id, name) VALUES (3, 'neurotest');
+
+			INSERT INTO visit_medicines (visit_id, medicine_id) VALUES (1, 1);
+			INSERT INTO visit_medicines (visit_id, medicine_id) VALUES (1, 2);
+			INSERT INTO visit_medicines (visit_id, medicine_id) VALUES (3, 3);
+			INSERT INTO visit_medicines (visit_id, medicine_id) VALUES (3, 2);
+		</sql>
+	</changeSet>
+
 </databaseChangeLog>
