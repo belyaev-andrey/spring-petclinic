@@ -10,4 +10,7 @@ POST http://localhost:8080/actuator/env
 Content-Type: application/json
 Accept: application/json
 
-{"name":"salary.integration.enabled", "value":"true"}
+{"name":"salary.integration.enabled", "value":"false"}
+
+###
+GET http://localhost:8080/vets

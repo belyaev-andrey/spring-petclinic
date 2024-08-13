@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RefreshScope
-public class SalaryConfiguration {
+class SalaryConfiguration {
 
 	@Value("${salary.integration.enabled}")
 	private Boolean enabled;

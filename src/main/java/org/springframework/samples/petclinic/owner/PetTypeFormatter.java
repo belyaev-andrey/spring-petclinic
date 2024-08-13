@@ -34,7 +34,7 @@ import java.util.Locale;
  * @author Michael Isvy
  */
 @Component
-public class PetTypeFormatter implements Formatter<PetType> {
+class PetTypeFormatter implements Formatter<PetType> {
 
 	private final OwnerRepository owners;
 

@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class SalaryServiceTest implements SalaryService {
+class SalaryServiceTest implements SalaryService {
 
 	@Transactional
 	@Override
