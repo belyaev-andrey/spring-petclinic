@@ -50,4 +50,9 @@ class CacheConfiguration {
 		return new MutableConfiguration<>().setStatisticsEnabled(true);
 	}
 
+	@Bean
+	public static SecurityKeyReader securityKeyReader() {
+		return new SecurityKeyReader();
+	}
+
 }
