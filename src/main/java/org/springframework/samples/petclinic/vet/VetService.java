@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,14 +42,21 @@ class VetService {
 		return vets;
 	}
 
-	private void addSalaries(List<Vet> vets1) {
-		Map<Integer, Vet> vetById = vets1.stream().collect(Collectors.toMap(Vet::getId, vet -> vet));
+	private void addSalaries(List<Vet> vets) {
+		Map<Integer, Vet> vetById = vets.stream().collect(Collectors.toMap(Vet::getId, vet -> vet));
 		salaryService
-			.getSalaries(vets1.stream().map(Vet::getId).toList())
+			.getSalaries(vets.stream().map(Vet::getId).toList())
 			.forEach(salary -> vetById.computeIfPresent(salary.vetID(), (id, vet) -> {
 					vet.setSalary(salary.salary());
 					return vet;
 				}
 			));
+	}
+
+	@Transactional(readOnly = true)
+	public Vet findById(Integer integer) {
+		Vet vet = vetRepository.findById(integer).orElseThrow();
+		vet.setSalary(salaryService.getSalary(vet.getId()));
+		return vet;
 	}
 }
