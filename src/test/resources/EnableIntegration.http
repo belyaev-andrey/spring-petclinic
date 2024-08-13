@@ -1,0 +1,13 @@
+###
+# Refresh context
+POST http://localhost:8080/actuator/refresh
+Content-Type: application/json
+
+
+###
+# Update property
+POST http://localhost:8080/actuator/env
+Content-Type: application/json
+Accept: application/json
+
+{"name":"salary.integration.enabled", "value":"true"}

@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.vet;
 
 import java.util.List;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,10 +36,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 class VetController {
 
-	private final VetRepository vetRepository;
+	private final VetService vetService;
 
-	public VetController(VetRepository clinicService) {
-		this.vetRepository = clinicService;
+	public VetController(VetService clinicService) {
+		this.vetService = clinicService;
 	}
 
 	@GetMapping("/vets.html")
@@ -63,7 +64,7 @@ class VetController {
 	private Page<Vet> findPaginated(int page) {
 		int pageSize = 5;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
-		return vetRepository.findAll(pageable);
+		return vetService.findAll(pageable);
 	}
 
 	@GetMapping(path = { "/vets" }, produces = "application/json")
@@ -71,7 +72,7 @@ class VetController {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for JSon/Object mapping
 		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetRepository.findAll());
+		vets.getVetList().addAll(this.vetService.findAll());
 		return vets;
 	}
 

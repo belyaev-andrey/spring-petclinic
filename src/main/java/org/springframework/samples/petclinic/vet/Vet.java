@@ -15,22 +15,18 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.*;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.samples.petclinic.model.Person;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 import jakarta.xml.bind.annotation.XmlElement;
 
 /**
@@ -49,6 +45,9 @@ public class Vet extends Person {
 	@JoinTable(name = "vet_specialties", joinColumns = @JoinColumn(name = "vet_id"),
 			inverseJoinColumns = @JoinColumn(name = "specialty_id"))
 	private Set<Specialty> specialties;
+
+	@Transient
+	private BigDecimal salary = BigDecimal.ZERO;
 
 	protected Set<Specialty> getSpecialtiesInternal() {
 		if (this.specialties == null) {
@@ -76,4 +75,10 @@ public class Vet extends Person {
 		getSpecialtiesInternal().add(specialty);
 	}
 
+	public void setSalary(BigDecimal salary) {
+		this.salary = salary;
+	}
+	public BigDecimal getSalary() {
+		return salary;
+	}
 }
