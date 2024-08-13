@@ -12,9 +12,9 @@ class SalaryConfiguration {
 	@Value("${salary.integration.enabled}")
 	private Boolean enabled;
 
-	@Bean(name = "salaryService")
+	@Bean
 	@RefreshScope
-	SalaryService createSalaryService() {
+	SalaryService salaryService() {
 		if (enabled) {
 			return new SalaryServiceProd();
 		}

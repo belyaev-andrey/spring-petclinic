@@ -43,6 +43,8 @@ public interface VetRepository extends JpaRepository<Vet, Integer> {
 	 * Retrieve all <code>Vet</code>s from the data store.
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
+	@Transactional(readOnly = true)
+	@Cacheable("vets")
 	List<Vet> findAll() throws DataAccessException;
 
 	/**
@@ -51,6 +53,8 @@ public interface VetRepository extends JpaRepository<Vet, Integer> {
 	 * @return
 	 * @throws DataAccessException
 	 */
+	@Transactional(readOnly = true)
+	@Cacheable("vets")
 	Page<Vet> findAll(Pageable pageable) throws DataAccessException;
 
 }
