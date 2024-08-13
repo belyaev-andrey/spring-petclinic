@@ -1,10 +1,5 @@
 package org.springframework.samples.petclinic.vet;
 
-import jakarta.annotation.Nullable;
-import org.springframework.aop.framework.Advised;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.salary.SalaryService;
@@ -13,14 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 class VetService {
 
-
 	private final VetRepository vetRepository;
+
 	private final SalaryService salaryService;
 
 	public VetService(VetRepository vetRepository, SalaryService salaryService) {
@@ -44,13 +38,11 @@ class VetService {
 
 	private void addSalaries(List<Vet> vets) {
 		Map<Integer, Vet> vetById = vets.stream().collect(Collectors.toMap(Vet::getId, vet -> vet));
-		salaryService
-			.getSalaries(vets.stream().map(Vet::getId).toList())
+		salaryService.getSalaries(vets.stream().map(Vet::getId).toList())
 			.forEach(salary -> vetById.computeIfPresent(salary.vetID(), (id, vet) -> {
-					vet.setSalary(salary.salary());
-					return vet;
-				}
-			));
+				vet.setSalary(salary.salary());
+				return vet;
+			}));
 	}
 
 	@Transactional(readOnly = true)
@@ -59,4 +51,5 @@ class VetService {
 		vet.setSalary(salaryService.getSalary(vet.getId()));
 		return vet;
 	}
+
 }

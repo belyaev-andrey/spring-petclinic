@@ -78,7 +78,9 @@ public class Vet extends Person {
 	public void setSalary(BigDecimal salary) {
 		this.salary = salary;
 	}
+
 	public BigDecimal getSalary() {
 		return salary;
 	}
+
 }

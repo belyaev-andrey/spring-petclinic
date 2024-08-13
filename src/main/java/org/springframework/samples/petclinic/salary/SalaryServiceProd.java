@@ -10,13 +10,13 @@ class SalaryServiceProd implements SalaryService {
 	@Transactional
 	@Override
 	public List<SalaryDto> getSalaries(List<Integer> vetIDs) {
-		return vetIDs.stream().map(vetId -> new SalaryDto(vetId, BigDecimal.valueOf(vetId*10))).toList();
+		return vetIDs.stream().map(vetId -> new SalaryDto(vetId, BigDecimal.valueOf(vetId * 10))).toList();
 	}
 
 	@Transactional
 	@Override
 	public BigDecimal getSalary(Integer vetID) {
-		return BigDecimal.valueOf(vetID*10);
+		return BigDecimal.valueOf(vetID * 10);
 	}
 
 }
