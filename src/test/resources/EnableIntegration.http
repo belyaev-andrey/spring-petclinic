@@ -14,3 +14,10 @@ Accept: application/json
 
 ###
 GET http://localhost:8080/vets/6
+
+
+###
+GET http://localhost:8080/actuator/beans
+
+###
+GET http://localhost:8080/actuator/env
