@@ -223,10 +223,9 @@
           <metadataRepository>
             <enabled>true</enabled>
           </metadataRepository>
-          <requiredVersion>17</requiredVersion>
-          <imageName>springDemo</imageName>
           <buildArgs>-O0 --native-compiler-options=-Og</buildArgs>
         </configuration>
+        <!--Required for native image-->
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -478,6 +477,7 @@
           </plugin>
         </plugins>
       </build>
+      <!--Required for native image-->
     </profile>
   </profiles>
 
