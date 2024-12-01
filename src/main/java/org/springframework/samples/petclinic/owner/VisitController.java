@@ -40,9 +40,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 class VisitController {
 
 	private final OwnerRepository owners;
+	private final VisitService visitService;
 
-	public VisitController(OwnerRepository owners) {
+	public VisitController(OwnerRepository owners, VisitService visitService) {
 		this.owners = owners;
+		this.visitService = visitService;
 	}
 
 	@InitBinder
