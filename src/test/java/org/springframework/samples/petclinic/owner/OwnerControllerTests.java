@@ -31,6 +31,7 @@ import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
@@ -95,9 +96,9 @@ class OwnerControllerTests {
 
 		given(this.owners.findAll(any(Pageable.class))).willReturn(new PageImpl<>(Lists.newArrayList(george)));
 
-		given(this.owners.findById(TEST_OWNER_ID)).willReturn(george);
+		given(this.owners.findOwnerById(TEST_OWNER_ID)).willReturn(george);
 		Visit visit = new Visit();
-		visit.setDate(LocalDate.now());
+		visit.setDate(LocalDateTime.now());
 		george.getPet("Max").getVisits().add(visit);
 
 	}

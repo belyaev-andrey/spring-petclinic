@@ -40,9 +40,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 class VisitController {
 
 	private final OwnerRepository owners;
+	private final VisitService visitService;
 
-	public VisitController(OwnerRepository owners) {
+	public VisitController(OwnerRepository owners, VisitService visitService) {
 		this.owners = owners;
+		this.visitService = visitService;
 	}
 
 	@InitBinder
@@ -60,7 +62,7 @@ class VisitController {
 	@ModelAttribute("visit")
 	public Visit loadPetWithVisit(@PathVariable("ownerId") int ownerId, @PathVariable("petId") int petId,
 			Map<String, Object> model) {
-		Owner owner = this.owners.findById(ownerId);
+		Owner owner = this.owners.findOwnerById(ownerId);
 
 		Pet pet = owner.getPet(petId);
 		model.put("pet", pet);
@@ -86,10 +88,8 @@ class VisitController {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		}
-
-		owner.addVisit(petId, visit);
-		this.owners.save(owner);
-		redirectAttributes.addFlashAttribute("message", "Your visit has been booked");
+		String ownerName = visitService.saveVisit(owner, petId, visit).getFirstName();
+		redirectAttributes.addFlashAttribute("message", "%s, your visit has been booked".formatted(ownerName));
 		return "redirect:/owners/{ownerId}";
 	}
 
