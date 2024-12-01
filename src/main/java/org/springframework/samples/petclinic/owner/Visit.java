@@ -16,6 +16,8 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
@@ -36,8 +38,8 @@ import jakarta.validation.constraints.NotBlank;
 public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate date;
+	@DateTimeFormat(pattern = "yyyy.MM.dd  HH:mm")
+	private LocalDateTime date;
 
 	@NotBlank
 	private String description;
@@ -46,14 +48,14 @@ public class Visit extends BaseEntity {
 	 * Creates a new instance of Visit for the current date
 	 */
 	public Visit() {
-		this.date = LocalDate.now();
+		this.date = LocalDateTime.now();
 	}
 
-	public LocalDate getDate() {
+	public LocalDateTime getDate() {
 		return this.date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 

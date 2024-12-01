@@ -90,7 +90,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindSingleOwnerWithPet() {
-		Owner owner = this.owners.findById(1);
+		Owner owner = this.owners.findOwnerById(1);
 		assertThat(owner.getLastName()).startsWith("Franklin");
 		assertThat(owner.getPets()).hasSize(1);
 		assertThat(owner.getPets().get(0).getType()).isNotNull();
@@ -119,7 +119,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdateOwner() {
-		Owner owner = this.owners.findById(1);
+		Owner owner = this.owners.findOwnerById(1);
 		String oldLastName = owner.getLastName();
 		String newLastName = oldLastName + "X";
 
@@ -127,7 +127,7 @@ class ClinicServiceTests {
 		this.owners.save(owner);
 
 		// retrieving new name from database
-		owner = this.owners.findById(1);
+		owner = this.owners.findOwnerById(1);
 		assertThat(owner.getLastName()).isEqualTo(newLastName);
 	}
 
@@ -144,7 +144,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldInsertPetIntoDatabaseAndGenerateId() {
-		Owner owner6 = this.owners.findById(6);
+		Owner owner6 = this.owners.findOwnerById(6);
 		int found = owner6.getPets().size();
 
 		Pet pet = new Pet();
@@ -157,7 +157,7 @@ class ClinicServiceTests {
 
 		this.owners.save(owner6);
 
-		owner6 = this.owners.findById(6);
+		owner6 = this.owners.findOwnerById(6);
 		assertThat(owner6.getPets()).hasSize(found + 1);
 		// checks that id has been generated
 		pet = owner6.getPet("bowser");
@@ -167,7 +167,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldUpdatePetName() {
-		Owner owner6 = this.owners.findById(6);
+		Owner owner6 = this.owners.findOwnerById(6);
 		Pet pet7 = owner6.getPet(7);
 		String oldName = pet7.getName();
 
@@ -175,7 +175,7 @@ class ClinicServiceTests {
 		pet7.setName(newName);
 		this.owners.save(owner6);
 
-		owner6 = this.owners.findById(6);
+		owner6 = this.owners.findOwnerById(6);
 		pet7 = owner6.getPet(7);
 		assertThat(pet7.getName()).isEqualTo(newName);
 	}
@@ -194,7 +194,7 @@ class ClinicServiceTests {
 	@Test
 	@Transactional
 	void shouldAddNewVisitForPet() {
-		Owner owner6 = this.owners.findById(6);
+		Owner owner6 = this.owners.findOwnerById(6);
 		Pet pet7 = owner6.getPet(7);
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();
@@ -210,7 +210,7 @@ class ClinicServiceTests {
 
 	@Test
 	void shouldFindVisitsByPetId() {
-		Owner owner6 = this.owners.findById(6);
+		Owner owner6 = this.owners.findOwnerById(6);
 		Pet pet7 = owner6.getPet(7);
 		Collection<Visit> visits = pet7.getVisits();
 
