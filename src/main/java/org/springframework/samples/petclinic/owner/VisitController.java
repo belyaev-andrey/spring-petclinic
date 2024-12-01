@@ -88,10 +88,8 @@ class VisitController {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		}
-		owner.getPet(petId).addVisit(visit);
-		owners.save(owner);
-		redirectAttributes.addFlashAttribute("message",
-				"%s, your visit has been booked for %s".formatted(owner.getFirstName(), visit.getDate()));
+		String ownerName = visitService.saveVisit(owner, petId, visit).getFirstName();
+		redirectAttributes.addFlashAttribute("message", "%s, your visit has been booked".formatted(ownerName));
 		return "redirect:/owners/{ownerId}";
 	}
 
