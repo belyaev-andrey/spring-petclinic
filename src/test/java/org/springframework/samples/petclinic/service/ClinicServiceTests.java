@@ -23,19 +23,20 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
-import org.springframework.samples.petclinic.owner.Pet;
-import org.springframework.samples.petclinic.owner.PetType;
-import org.springframework.samples.petclinic.owner.Visit;
+import org.springframework.samples.petclinic.owner.*;
 import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetRepository;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * Integration test of the Service and the Repository layer.
@@ -67,9 +68,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @DataJpaTest
 // Ensure that if the mysql profile is active we connect to the real database:
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-// @TestPropertySource("/application-postgres.properties")
+// @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Testcontainers
+@TestPropertySource("/application-mysql.properties")
 class ClinicServiceTests {
+
+	@Container
+	static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:9.0");
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", mysql::getJdbcUrl);
+		registry.add("spring.datasource.username", mysql::getUsername);
+		registry.add("spring.datasource.password", mysql::getPassword);
+	}
 
 	@Autowired
 	protected OwnerRepository owners;

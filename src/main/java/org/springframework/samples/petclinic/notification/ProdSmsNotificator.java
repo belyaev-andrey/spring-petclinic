@@ -13,4 +13,5 @@ class ProdSmsNotificator implements Notificator {
 	public String sendSms(String phone, int ownerId, int visitId) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
+
 }

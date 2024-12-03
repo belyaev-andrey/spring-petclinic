@@ -19,12 +19,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 /**
@@ -38,7 +36,7 @@ import jakarta.validation.constraints.NotBlank;
 public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
-	@DateTimeFormat(pattern = "yyyy.MM.dd  HH:mm")
+	@DateTimeFormat(pattern = "yyyy.MM.dd HH:mm")
 	private LocalDateTime date;
 
 	@NotBlank
