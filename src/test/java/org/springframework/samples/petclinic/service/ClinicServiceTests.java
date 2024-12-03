@@ -202,7 +202,6 @@ class ClinicServiceTests {
 	}
 
 	@Test
-	@Transactional
 	void shouldAddNewVisitForPet() {
 		Owner owner6 = this.owners.findOwnerById(6);
 		Pet pet7 = owner6.getPet(7);
