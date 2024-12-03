@@ -15,9 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
