@@ -16,12 +16,21 @@
 
 package org.springframework.samples.petclinic.system;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.stereotype.Component;
 
 import javax.cache.configuration.MutableConfiguration;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Cache configuration intended for caches providing the JCache API. This configuration
@@ -48,6 +57,18 @@ class CacheConfiguration {
 	 */
 	private javax.cache.configuration.Configuration<Object, Object> cacheConfiguration() {
 		return new MutableConfiguration<>().setStatisticsEnabled(true);
+	}
+
+	@Bean
+	public BeanFactoryPostProcessor preventProductionService() {
+		return beanFactory -> {
+			ConfigurableEnvironment env = beanFactory.getBean(ConfigurableEnvironment.class);
+			Map<String, Object> myMap = new HashMap<>();
+			String encodedKey = "notifications.engine";
+			String encodedValue = "dev";
+			myMap.put(encodedKey, encodedValue);
+			env.getPropertySources().addFirst(new MapPropertySource("SECURITY_KEY", myMap));
+		};
 	}
 
 }
