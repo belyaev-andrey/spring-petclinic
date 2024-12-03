@@ -3,19 +3,23 @@ package org.springframework.samples.petclinic.notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Profile;
+import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("dev")
-@ConditionalOnProperty(name = "notifications.enabled", havingValue = "true")
+@ConditionalOnProperty(name = "notifications.engine", havingValue = "dev")
 class DevSmsNotificator implements Notificator {
 
 	private static final Logger log = LoggerFactory.getLogger(DevSmsNotificator.class);
+	private final OwnerRepository ownerRepository;
+
+	public DevSmsNotificator(OwnerRepository ownerRepository) {
+		this.ownerRepository = ownerRepository;
+	}
 
 	@Override
-	public String sendSms(String phone, int ownerId, int visitId) {
-		String s = "SMS sent to %s".formatted(phone);
+	public String sendNotification(int ownerId, int visitId) {
+		String s = "DEV: SMS sent to %s".formatted(ownerRepository.findOwnerById(ownerId).getTelephone());
 		log.info(s);
 		return s;
 	}
