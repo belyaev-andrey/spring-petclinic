@@ -41,11 +41,8 @@ class VisitController {
 
 	private final OwnerRepository owners;
 
-	private final VisitService visitService;
-
-	public VisitController(OwnerRepository owners, VisitService visitService) {
+	public VisitController(OwnerRepository owners) {
 		this.owners = owners;
-		this.visitService = visitService;
 	}
 
 	@InitBinder
@@ -89,7 +86,8 @@ class VisitController {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		}
-		visitService.saveVisit(owner.getId(), petId, visit);
+		owner.getPet(petId).addVisit(visit);
+		owners.save(owner);
 		redirectAttributes.addFlashAttribute("message",
 				"%s, your visit has been booked for %s".formatted(owner.getFirstName(), visit.getDate()));
 		return "redirect:/owners/{ownerId}";
