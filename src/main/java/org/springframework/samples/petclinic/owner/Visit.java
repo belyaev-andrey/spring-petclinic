@@ -36,7 +36,7 @@ import jakarta.validation.constraints.NotBlank;
 public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
-	@DateTimeFormat(pattern = "yyyy.MM.dd  HH:mm")
+	@DateTimeFormat(pattern = "yyyy.MM.dd HH:mm")
 	private LocalDateTime date;
 
 	@NotBlank
