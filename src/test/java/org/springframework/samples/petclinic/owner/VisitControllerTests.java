@@ -39,7 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
  *
  * @author Colin But
  */
-@WebMvcTest({VisitController.class, VisitService.class})
+@WebMvcTest({ VisitController.class, VisitService.class })
 @DisabledInNativeImage
 @DisabledInAotMode
 class VisitControllerTests {
