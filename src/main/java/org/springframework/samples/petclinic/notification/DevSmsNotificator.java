@@ -7,7 +7,7 @@ import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(name = "notifications.engine", havingValue = "dev")
+@ConditionalOnProperty(name = "notifications.engine", havingValue = "dev", matchIfMissing = true)
 class DevSmsNotificator implements Notificator {
 
 	private static final Logger log = LoggerFactory.getLogger(DevSmsNotificator.class);
