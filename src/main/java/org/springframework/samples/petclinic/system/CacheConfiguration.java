@@ -16,16 +16,19 @@
 
 package org.springframework.samples.petclinic.system;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
+import org.springframework.stereotype.Component;
 
 import javax.cache.configuration.MutableConfiguration;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +39,6 @@ import java.util.Map;
  */
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
-@ConditionalOnProperty(prefix = "app.cache", name = "enabled", havingValue = "true", matchIfMissing = true)
 class CacheConfiguration {
 
 	@Bean
@@ -58,7 +60,6 @@ class CacheConfiguration {
 	}
 
 	@Bean
-	@ConditionalOnProperty(name = "notifications.engine", havingValue = "prod")
 	public BeanFactoryPostProcessor preventProductionService() {
 		return beanFactory -> {
 			ConfigurableEnvironment env = beanFactory.getBean(ConfigurableEnvironment.class);
