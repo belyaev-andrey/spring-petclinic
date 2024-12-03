@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class VisitService {
+public class VisitService {
 
 	private final OwnerRepository ownerRepository;
 
@@ -14,12 +14,16 @@ class VisitService {
 	}
 
 	@Transactional
-	public Owner saveVisit(Owner owner, int petId, Visit visit) {
-		Owner currentOwner = ownerRepository.findOwnerById(owner.getId());
-		Pet pet = currentOwner.getPets().stream()
-			.filter(p -> p.getId() == petId).findFirst().orElseThrow(EntityNotFoundException::new);
+	public Visit saveVisit(int ownerId, int petId, Visit visit) {
+		Owner currentOwner = ownerRepository.findOwnerById(ownerId);
+		Pet pet = currentOwner.getPets()
+			.stream()
+			.filter(p -> p.getId() == petId)
+			.findFirst()
+			.orElseThrow(EntityNotFoundException::new);
 		pet.addVisit(visit);
-		return ownerRepository.save(currentOwner);
+		ownerRepository.save(currentOwner);
+		return visit;
 	}
 
 }

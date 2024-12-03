@@ -22,19 +22,18 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.owner.*;
 import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetRepository;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.aot.DisabledInAotMode;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -68,15 +67,21 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * @author Dave Syer
  */
 @DataJpaTest
-@Testcontainers(disabledWithoutDocker = true)
-@DisabledInNativeImage
-@DisabledInAotMode
+// Ensure that if the mysql profile is active we connect to the real database:
+// @AutoConfigureTestDatabase(replace = Replace.NONE)
+@Testcontainers
 @TestPropertySource("/application-mysql.properties")
 class ClinicServiceTests {
 
-	@ServiceConnection
 	@Container
-	static MySQLContainer<?> container = new MySQLContainer<>("mysql:9.0");
+	static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:9.0");
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url", mysql::getJdbcUrl);
+		registry.add("spring.datasource.username", mysql::getUsername);
+		registry.add("spring.datasource.password", mysql::getPassword);
+	}
 
 	@Autowired
 	protected OwnerRepository owners;
@@ -85,9 +90,6 @@ class ClinicServiceTests {
 	protected VetRepository vets;
 
 	Pageable pageable;
-
-	@Autowired
-	private TransactionTemplate transactionTemplate;
 
 	@Test
 	void shouldFindOwnersByLastName() {
@@ -202,6 +204,7 @@ class ClinicServiceTests {
 	}
 
 	@Test
+	@Transactional
 	void shouldAddNewVisitForPet() {
 		Owner owner6 = this.owners.findOwnerById(6);
 		Pet pet7 = owner6.getPet(7);
