@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 class DevSmsNotificator implements Notificator {
 
 	private static final Logger log = LoggerFactory.getLogger(DevSmsNotificator.class);
+
 	private final OwnerRepository ownerRepository;
 
 	public DevSmsNotificator(OwnerRepository ownerRepository) {

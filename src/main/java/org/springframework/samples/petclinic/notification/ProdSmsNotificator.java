@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 class ProdSmsNotificator implements Notificator {
 
 	private static final Logger log = LoggerFactory.getLogger(ProdSmsNotificator.class);
+
 	private final OwnerRepository ownerRepository;
 
 	public ProdSmsNotificator(OwnerRepository ownerRepository) {
@@ -21,7 +22,8 @@ class ProdSmsNotificator implements Notificator {
 	@Override
 	public String sendNotification(int ownerId, int visitId) {
 		Owner owner = ownerRepository.findOwnerById(ownerId);
-		String s = "PROD: SMS sent to %s %s. Phone: %s".formatted(owner.getFirstName(), owner.getLastName(), owner.getTelephone());
+		String s = "PROD: SMS sent to %s %s. Phone: %s".formatted(owner.getFirstName(), owner.getLastName(),
+				owner.getTelephone());
 		log.info(s);
 		return s;
 	}
