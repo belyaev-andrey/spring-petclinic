@@ -36,3 +36,87 @@
 * Fix the issue
 * Restart the application
 
+Code hints:
+```java
+@RestController
+@RequestMapping("/api/visits")
+class VisitRestController {
+
+	private final VisitService visitService;
+	private final Notificator notificator;
+
+	public VisitRestController(VisitService visitService, Notificator notificator) {
+		this.visitService = visitService;
+		this.notificator = notificator;
+	}
+
+	@PostMapping(value = "/{ownerId}/pets/{petId}", consumes = "application/json", produces = "application/json")
+	Visit scheduleVisit(@PathVariable int ownerId, @PathVariable int petId, @Valid @RequestBody Visit visit) {
+		Visit addedVisit = visitService.addVisit(ownerId, petId, visit);
+		notificator.sendNotification(ownerId, addedVisit.getId());
+		return addedVisit;
+	}
+}
+
+@Service
+class VisitService {
+	private final OwnerRepository ownerRepository;
+
+	public VisitService(OwnerRepository ownerRepository) {
+		this.ownerRepository = ownerRepository;
+	}
+
+	@Transactional
+	public Visit addVisit(int ownerId, int petId, Visit visit) {
+		Owner owner = ownerRepository.findOwnerById(ownerId);
+		owner.getPet(petId).addVisit(visit);
+		Owner saved = ownerRepository.save(owner);
+		return saved.getPet(petId).getVisits().stream().max(Comparator.comparing(Visit::getDate)).orElseThrow();
+	}
+}
+```
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Testcontainers
+@AutoConfigureMockMvc
+@TestPropertySource("/application-mysql.properties")
+public class VisitApiTest {
+
+	private static final Logger log = LoggerFactory.getLogger(VisitApiTest.class);
+
+	@Container
+	@ServiceConnection
+	static MySQLContainer<?> container = new MySQLContainer<>("mysql:9.0");
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Test
+	void testVisitApi() throws Exception {
+
+		String visitJson = """
+			{
+			    "description": "Routine Checkup"
+			}
+			""".stripIndent();
+
+
+		MvcResult mvcResult = mockMvc.perform(post("/api/visits/{ownerId}/pets/{petId}", 6, 7)
+				.contentType("application/json")
+				.content(visitJson)
+			)
+			.andExpect(status().isOk())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Routine Checkup"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.date").exists())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+			.andReturn();
+
+		log.info(mvcResult.getResponse().getContentAsString());
+	}
+}
+```
+
+```properties
+notifications.engine=${NOTIFICATION_ENGINE:dev}
+```
