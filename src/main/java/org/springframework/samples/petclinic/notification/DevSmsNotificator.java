@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.event.EventListener;
 import org.springframework.samples.petclinic.owner.OwnerRepository;
 import org.springframework.stereotype.Component;
 
@@ -19,10 +20,15 @@ class DevSmsNotificator implements Notificator {
 	}
 
 	@Override
-	public String sendNotification(int ownerId, int visitId) {
+	public String sendNotification(int ownerId, int petId, int visitId) {
 		String s = "DEV: SMS sent to %s".formatted(ownerRepository.findOwnerById(ownerId).getTelephone());
 		log.info(s);
 		return s;
 	}
 
+	@Override
+	@EventListener(classes = {VisitScheduleNotification.class})
+	public void onVisitScheduled(VisitScheduleNotification event) {
+		sendNotification(event.ownerId(), event.petId(), event.visitId());
+	}
 }
