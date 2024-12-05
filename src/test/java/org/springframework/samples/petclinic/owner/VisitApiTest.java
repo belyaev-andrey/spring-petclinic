@@ -38,8 +38,9 @@ public class VisitApiTest {
 				}
 				""".stripIndent()).contentType("application/json"))
 			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Test Visit"));
+			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Test Visit"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.date").exists())
+			.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 		log.info("Visit created");
 	}
 
