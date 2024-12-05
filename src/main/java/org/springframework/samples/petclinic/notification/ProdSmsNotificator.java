@@ -30,7 +30,7 @@ class ProdSmsNotificator implements Notificator {
 	}
 
 	@Override
-	@EventListener(classes = {VisitScheduleNotification.class})
+	@EventListener(classes = { VisitScheduleNotification.class })
 	public void onVisitScheduled(VisitScheduleNotification event) {
 		sendNotification(event.ownerId(), event.petId(), event.visitId());
 	}
