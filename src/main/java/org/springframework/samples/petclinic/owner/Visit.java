@@ -63,4 +63,9 @@ public class Visit extends BaseEntity {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		return "Visit{date=%s, description='%s'}".formatted(date, description);
+	}
+
 }
