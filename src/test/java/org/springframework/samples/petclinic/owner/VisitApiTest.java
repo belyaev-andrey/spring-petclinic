@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.owner;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +18,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @TestPropertySource("/application-mysql.properties")
 public class VisitApiTest {
-
-	private static final Logger log = LoggerFactory.getLogger(VisitApiTest.class);
 
 	@Container
 	@ServiceConnection
@@ -41,7 +37,6 @@ public class VisitApiTest {
 			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Test Visit"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.date").exists())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-		log.info("Visit created");
 	}
 
 }
