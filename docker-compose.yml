@@ -1,4 +1,12 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: images/Dockerfile  # Specify path to your Dockerfile
+    image: app-petclinic-image:1.0.0
+    platform: linux/amd64            # Specify the platform
+    ports:
+      - "8080:8080"
   mysql:
     image: mysql:9.0
     ports:
