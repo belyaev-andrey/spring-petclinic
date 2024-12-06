@@ -34,8 +34,6 @@ class ProdSmsNotificator implements Notificator {
 		String s = "PROD: SMS sent to %s %s. Phone: %s".formatted(owner.getFirstName(), owner.getLastName(),
 				owner.getTelephone());
 		log.info(s);
-		log.info("Visits: ");
-		owner.getPet(petId).getVisits().forEach(v -> log.info(v.toString()));
 		return s;
 	}
 
