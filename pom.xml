@@ -464,6 +464,7 @@
             <artifactId>native-maven-plugin</artifactId>
             <configuration>
               <debug>true</debug>
+              <imageName>app-petclinic-3</imageName>
             </configuration>
             <executions>
               <execution>
