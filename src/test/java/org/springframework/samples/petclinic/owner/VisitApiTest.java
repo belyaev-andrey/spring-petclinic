@@ -28,7 +28,7 @@ public class VisitApiTest {
 
 	@Test
 	void testVisitApi() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/visits/owner/{ownerId}/pet/{petId}", 10, 10).content("""
+		mockMvc.perform(MockMvcRequestBuilders.post("/api/visits/owner/{ownerId}/pet/{petId}", 6, 7).content("""
 				{
 					"description": "Test Visit"
 				}
