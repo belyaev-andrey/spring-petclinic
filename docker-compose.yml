@@ -2,9 +2,9 @@ services:
   app:
     build:
       context: .
-      dockerfile: images/Dockerfile  # Specify path to your Dockerfile
+      dockerfile: images/Dockerfile
     image: app-petclinic-image:1.0.0
-    platform: linux/arm64            # Specify the platform
+    platform: linux/arm64
     ports:
       - "8080:8080"
     environment:
