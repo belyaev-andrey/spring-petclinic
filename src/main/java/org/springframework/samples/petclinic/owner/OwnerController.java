@@ -157,10 +157,4 @@ class OwnerController {
 		return mav;
 	}
 
-	@GetMapping("/api/owners/{ownerId}")
-	public @ResponseBody OwnerDto fetchOwner(@PathVariable("ownerId") int ownerId) {
-		Owner owner = this.owners.findById(ownerId);
-		return new OwnerDto(owner);
-	}
-
 }
