@@ -35,6 +35,7 @@ public class Visit extends BaseEntity {
 
 	@Column(name = "visit_date")
 	@DateTimeFormat(pattern = "yyyy.MM.dd HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime date;
 
 	@NotBlank
