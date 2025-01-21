@@ -1,15 +1,43 @@
 package org.springframework.samples.petclinic.owner;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/visits")
 class VisitApiController {
 
-	@PostMapping(value = "/owner/{ownerId}/pet/{petId}", consumes = "application/json", produces = "application/json")
-	Visit scheduleVisit(@PathVariable int ownerId, @PathVariable int petId, @Valid @RequestBody Visit visit) {
-		return null;
+	private final VisitService visitService;
+
+	public VisitApiController(VisitService visitService) {
+		this.visitService = visitService;
 	}
 
+	@PostMapping(value = "/owner/{ownerId}/pet/{petId}", consumes = "application/json", produces = "application/json")
+	Visit scheduleVisit(@PathVariable int ownerId, @PathVariable int petId, @Valid @RequestBody Visit visit) {
+		return visitService.saveVisit(ownerId, petId, visit);
+	}
+
+}
+
+@Service
+class VisitService {
+	private final OwnerRepository ownerRepository;
+
+	VisitService(OwnerRepository ownerRepository) {
+		this.ownerRepository = ownerRepository;
+	}
+
+	@Transactional
+	Visit saveVisit(int ownerId, int petId, Visit visit) {
+		Owner owner = ownerRepository.findOwnerById(ownerId);
+		owner.getPet(petId).addVisit(visit);
+		Owner saved = ownerRepository.save(owner);
+		return
+			saved.getPet(petId).getVisits()
+			.stream().min((v1, v2) -> v2.getDate().compareTo(v1.getDate()))
+			.orElseThrow();
+	}
 }

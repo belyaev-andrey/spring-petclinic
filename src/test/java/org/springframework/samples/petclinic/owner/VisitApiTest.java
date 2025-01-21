@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.containers.MySQLContainer;
@@ -16,7 +18,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 @AutoConfigureMockMvc
-@TestPropertySource("/application-mysql.properties")
+@TestPropertySource(properties = {"database=mysql", "spring.sql.init.mode=always"})
 public class VisitApiTest {
 
 	@Container
@@ -28,11 +30,13 @@ public class VisitApiTest {
 
 	@Test
 	void testVisitApi() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/visits/owner/{ownerId}/pet/{petId}", 6, 7).content("""
-				{
-					"description": "Test Visit"
-				}
-				""".stripIndent()).contentType("application/json"))
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/visits/owner/{ownerId}/pet/{petId}", 6, 7).content("""
+			{
+				"description": "Test Visit"
+			}
+			""".stripIndent()).contentType("application/json"));
+
+		response
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Test Visit"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.date").exists())
