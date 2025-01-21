@@ -53,3 +53,14 @@ CREATE TABLE IF NOT EXISTS visits (
   description VARCHAR(255),
   FOREIGN KEY (pet_id) REFERENCES pets(id)
 ) engine=InnoDB;
+
+CREATE TABLE IF NOT EXISTS collar
+(
+  collar_message VARCHAR(255),
+  serial_id      INT(4) UNSIGNED NOT NULL,
+  pet_id         INT(4) UNSIGNED NOT NULL,
+  CONSTRAINT pk_collar PRIMARY KEY (serial_id, pet_id)
+);
+
+ALTER TABLE collar
+  ADD CONSTRAINT FK_COLLAR_ON_PET FOREIGN KEY (pet_id) REFERENCES pets (id);

@@ -51,3 +51,7 @@ INSERT IGNORE INTO visits VALUES (1, 7, '2010-03-04', 'rabies shot');
 INSERT IGNORE INTO visits VALUES (2, 8, '2011-03-04', 'rabies shot');
 INSERT IGNORE INTO visits VALUES (3, 8, '2009-06-04', 'neutered');
 INSERT IGNORE INTO visits VALUES (4, 7, '2008-09-04', 'spayed');
+
+INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 1, 1);
+INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 2, 2);
+INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 3, 7);

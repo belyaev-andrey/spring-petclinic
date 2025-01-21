@@ -51,3 +51,7 @@ INSERT INTO visits (pet_id, visit_date, description) SELECT 7, '2010-03-04 12:00
 INSERT INTO visits (pet_id, visit_date, description) SELECT 8, '2011-03-04 13:00', 'rabies shot' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=2);
 INSERT INTO visits (pet_id, visit_date, description) SELECT 8, '2009-06-04 14:00', 'neutered' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=3);
 INSERT INTO visits (pet_id, visit_date, description) SELECT 7, '2008-09-04 15:00', 'spayed' WHERE NOT EXISTS (SELECT * FROM visits WHERE id=4);
+
+INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 1, 1);
+INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 2, 2);
+INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 3, 7);

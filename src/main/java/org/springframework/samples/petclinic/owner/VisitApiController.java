@@ -25,15 +25,18 @@ class VisitApiController {
 @Service
 class VisitService {
 	private final OwnerRepository ownerRepository;
+	private final CollarRepository collarRepository;
 
-	VisitService(OwnerRepository ownerRepository) {
+	VisitService(OwnerRepository ownerRepository, CollarRepository collarRepository) {
 		this.ownerRepository = ownerRepository;
+		this.collarRepository = collarRepository;
 	}
 
 	@Transactional
 	Visit saveVisit(int ownerId, int petId, Visit visit) {
 		Owner owner = ownerRepository.findOwnerById(ownerId);
 		owner.getPet(petId).addVisit(visit);
+		Collar collar = collarRepository.findByCollarId_Pet_Id(petId).stream().findFirst().orElseThrow();
 		Owner saved = ownerRepository.save(owner);
 		return
 			saved.getPet(petId).getVisits()

@@ -50,3 +50,14 @@ CREATE TABLE IF NOT EXISTS visits (
   description TEXT
 );
 CREATE INDEX ON visits (pet_id);
+
+CREATE TABLE collar
+(
+  collar_message VARCHAR(255),
+  serial_id      BIGINT  NOT NULL,
+  pet_id         INTEGER NOT NULL,
+  CONSTRAINT pk_collar PRIMARY KEY (serial_id, pet_id)
+);
+
+ALTER TABLE collar
+  ADD CONSTRAINT FK_COLLAR_ON_PET FOREIGN KEY (pet_id) REFERENCES pets (id);
