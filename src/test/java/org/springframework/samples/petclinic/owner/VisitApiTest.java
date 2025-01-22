@@ -30,7 +30,9 @@ public class VisitApiTest {
 
 	@Test
 	void testVisitApi() throws Exception {
-		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/visits/owner/{ownerId}/pet/{petId}", 6, 7).content("""
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders
+			.post("/api/visits/owner/{ownerId}/pet/{petId}", 6, 7)
+			.content("""
 			{
 				"description": "Test Visit"
 			}
@@ -38,7 +40,8 @@ public class VisitApiTest {
 
 		response
 			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Test Visit"))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.description")
+				.value("Test Visit"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.date").exists())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 	}
