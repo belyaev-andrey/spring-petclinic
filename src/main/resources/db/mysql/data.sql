@@ -55,3 +55,7 @@ INSERT IGNORE INTO visits VALUES (4, 7, '2008-09-04', 'spayed');
 INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 1, 1);
 INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 2, 2);
 INSERT IGNORE INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 3, 7);
+
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id) VALUES (UUID_TO_BIN('123e4567-e89b-12d3-a456-426614174000'), 'Red collar tag for Max', 1, 1);
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id) VALUES (UUID_TO_BIN('987fcdeb-51a2-43d8-9012-345678901234'), 'Blue collar tag for Luna', 2, 2);
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id) VALUES (UUID_TO_BIN('555eeeee-a123-4567-b89c-123456789abc'), 'Green collar tag for Charlie', 3, 7);

@@ -55,3 +55,12 @@ INSERT INTO visits (pet_id, visit_date, description) SELECT 7, '2008-09-04 15:00
 INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 1, 1);
 INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 2, 2);
 INSERT INTO collar (collar_message, serial_id, pet_id) VALUES ('Reflective', 3, 7);
+
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id)
+VALUES ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Smart tag for Buddy', 1, 1);
+
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id)
+VALUES ('b1eacd88-8d1c-5ef9-cc7e-7cc9ce491b22', 'GPS tracker for Lucy', 2, 2);
+
+INSERT INTO airtag (tag_id, description, collar_serial_id, collar_pet_id)
+VALUES ('c2fbde77-7e2d-6fe0-dd8f-8dd0df502c33', 'Location device for Max', 3, 7);

@@ -26,10 +26,12 @@ class VisitApiController {
 class VisitService {
 	private final OwnerRepository ownerRepository;
 	private final CollarRepository collarRepository;
+	private final AirTagRepository airTagRepository;
 
-	VisitService(OwnerRepository ownerRepository, CollarRepository collarRepository) {
+	VisitService(OwnerRepository ownerRepository, CollarRepository collarRepository, AirTagRepository airTagRepository) {
 		this.ownerRepository = ownerRepository;
 		this.collarRepository = collarRepository;
+		this.airTagRepository = airTagRepository;
 	}
 
 	@Transactional
@@ -37,6 +39,7 @@ class VisitService {
 		Owner owner = ownerRepository.findOwnerById(ownerId);
 		owner.getPet(petId).addVisit(visit);
 		Collar collar = collarRepository.findByCollarId_Pet_Id(petId).stream().findFirst().orElseThrow();
+		AirTag airTag = airTagRepository.findAll().stream().findFirst().orElseThrow();
 		Owner saved = ownerRepository.save(owner);
 		return
 			saved.getPet(petId).getVisits()
