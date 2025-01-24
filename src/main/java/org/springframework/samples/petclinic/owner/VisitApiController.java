@@ -39,7 +39,7 @@ class VisitService {
 		Owner owner = ownerRepository.findOwnerById(ownerId);
 		owner.getPet(petId).addVisit(visit);
 		Collar collar = collarRepository.findByCollarId_Pet_Id(petId).stream().findFirst().orElseThrow();
-		AirTag airTag = airTagRepository.findAll().stream().findFirst().orElseThrow();
+		AirTag airTag = airTagRepository.findByCollar(collar);
 		Owner saved = ownerRepository.save(owner);
 		return
 			saved.getPet(petId).getVisits()
