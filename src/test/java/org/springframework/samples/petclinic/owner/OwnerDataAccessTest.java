@@ -42,7 +42,7 @@ public class OwnerDataAccessTest {
 
 	@Test
 	void testCheckListJoin() {
-		Page<Owner> owners = ownerRepository.findByLastName("", Pageable.unpaged());
+		Page<Owner> owners = ownerRepository.findByLastName("", Pageable.ofSize(5));
 		Assertions.assertFalse(owners.getContent().isEmpty());
 		Strings s = new Strings(Locale.ENGLISH);
 		owners.forEach(owner -> {
