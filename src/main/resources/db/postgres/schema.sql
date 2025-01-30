@@ -56,11 +56,9 @@ CREATE TABLE IF NOT EXISTS collar
   collar_message VARCHAR(255),
   serial_id      BIGINT  NOT NULL,
   pet_id         INTEGER NOT NULL,
-  CONSTRAINT pk_collar PRIMARY KEY (serial_id, pet_id)
+  CONSTRAINT pk_collar PRIMARY KEY (serial_id, pet_id),
+  CONSTRAINT FK_COLLAR_ON_PET FOREIGN KEY (pet_id) REFERENCES pets (id)
 );
-
-ALTER TABLE collar
-  ADD CONSTRAINT FK_COLLAR_ON_PET FOREIGN KEY (pet_id) REFERENCES pets (id);
 
 CREATE TABLE IF NOT EXISTS airtag
 (
@@ -68,11 +66,7 @@ CREATE TABLE IF NOT EXISTS airtag
   description      VARCHAR(255) NOT NULL,
   collar_serial_id BIGINT,
   collar_pet_id    INTEGER,
-  CONSTRAINT pk_airtag PRIMARY KEY (tag_id)
+  CONSTRAINT pk_airtag PRIMARY KEY (tag_id),
+  CONSTRAINT uc_airtag_collar_pet UNIQUE (collar_pet_id),
+  CONSTRAINT FK_AIRTAG_ON_COSECOPEID FOREIGN KEY (collar_serial_id, collar_pet_id) REFERENCES collar (serial_id, pet_id)
 );
-
-ALTER TABLE airtag
-  ADD CONSTRAINT uc_airtag_collar_pet UNIQUE (collar_pet_id);
-
-ALTER TABLE airtag
-  ADD CONSTRAINT FK_AIRTAG_ON_COSECOPEID FOREIGN KEY (collar_serial_id, collar_pet_id) REFERENCES collar (serial_id, pet_id);
