@@ -18,7 +18,9 @@ package org.springframework.samples.petclinic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ImportRuntimeHints;
+import org.springframework.samples.petclinic.vet.VetConfigurationProperties;
 
 /**
  * PetClinic Spring Boot Application.
@@ -27,6 +29,7 @@ import org.springframework.context.annotation.ImportRuntimeHints;
  *
  */
 @SpringBootApplication
+@EnableConfigurationProperties(VetConfigurationProperties.class)
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
 public class PetClinicApplication {
 

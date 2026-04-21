@@ -49,7 +49,7 @@ class VetControllerTests {
 	private MockMvc mockMvc;
 
 	@MockitoBean
-	private VetRepository vets;
+	private VetService vetService;
 
 	private Vet james() {
 		Vet james = new Vet();
@@ -73,9 +73,9 @@ class VetControllerTests {
 
 	@BeforeEach
 	void setup() {
-		given(this.vets.findAll()).willReturn(Lists.newArrayList(james(), helen()));
-		given(this.vets.findAll(any(Pageable.class)))
-			.willReturn(new PageImpl<Vet>(Lists.newArrayList(james(), helen())));
+		given(this.vetService.findAll()).willReturn(Lists.newArrayList(james(), helen()));
+		given(this.vetService.findAll(any(Pageable.class)))
+			.willReturn(new PageImpl<>(Lists.newArrayList(james(), helen())));
 
 	}
 
